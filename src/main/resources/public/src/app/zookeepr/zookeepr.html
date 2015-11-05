@@ -1,0 +1,76 @@
+<div class="col-md-4">
+	<h3>Enclosures</h3>
+	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+		data-target="#enclosureModal">Create New Enclosure</button>
+	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+		data-target="#enclosureModal" ng-repeat="enclosure in enclosures">{{enclosure.enclosureName}}</button>
+</div>
+<div class="col-md-4">
+	<h3>Animals</h3>
+	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+		data-target="#animalModal">Create New Animal</button>
+	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+		data-target="#animalModal" ng-repeat="animal in animals">{{animal.commonName}}</button>
+</div>
+<div class="col-md-4">
+	<h3>Foods</h3>
+	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+		data-target="#foodModal">Create New Food</button>
+	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+		data-target="#foodModal" ng-repeat="food in foods">{{food.foodName}}</button>
+</div>
+
+<div id="enclosureModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Enclosure Form</h4>
+			</div>
+			<div class="modal-body">
+				<form novalidate>
+					<h1>Is This Working At All?</h1>
+					<formly-form model="enclosure" fields="enclosureFields" form="enclosureForm"> 
+					</formly-form>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="animalModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Animal Form</h4>
+			</div>
+			<div class="modal-body">
+				<p>Soon to Come - Animal Form</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="foodModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Food Form</h4>
+			</div>
+			<div class="modal-body">
+				<p>Soon to Come - Food Form</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
