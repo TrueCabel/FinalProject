@@ -20,7 +20,7 @@ public class ZooKeeprApplication
 	public DataSource dataSource()
     {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setUrl("jdbc:mysql://pc10211:3306/zookeepr");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/zookeepr");
 		dataSource.setUsername("root");
 		dataSource.setPassword("root");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");

@@ -1,5 +1,7 @@
 package com.catalyst.devworks.entities;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,10 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="animal", catalog="zookeepr")
@@ -33,7 +40,7 @@ public class Animal implements java.io.Serializable
 	@Column(name = "scientific_name", unique=true)
 	private String scientificName;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "foodID")
 	private FavoriteFood favoriteFood;
 	

@@ -1,6 +1,8 @@
 package com.catalyst.devworks.entities;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,10 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="animal_enclosure", catalog="zookeepr")
@@ -30,7 +37,7 @@ public class Enclosure implements java.io.Serializable
 	@Column(name = "enclosure_name")
 	private String enclosureName;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "animalID")
 	private Animal animal;
 	
@@ -40,8 +47,8 @@ public class Enclosure implements java.io.Serializable
 	
 	@NotNull
 	@Column(name = "feeding_time")
-	private LocalTime feedingTime;
-	
+	private Date feedingTime;
+		
 	@NotNull
 	@Column(name = "enclosure_condition")
 	private EnclosureConditionEnum enclosure_condition;
@@ -78,11 +85,11 @@ public class Enclosure implements java.io.Serializable
 	{
 		this.numberOfAnimals = numberOfAnimals;
 	}
-	public LocalTime getFeedingTime()
+	public Date getFeedingTime()
 	{
 		return this.feedingTime;
 	}
-	public void setFeedingTime(LocalTime feedingTime)
+	public void setFeedingTime(Date feedingTime)
 	{
 		this.feedingTime = feedingTime;
 	}

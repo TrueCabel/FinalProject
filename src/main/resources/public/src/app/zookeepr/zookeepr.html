@@ -1,24 +1,59 @@
 <div class="col-md-4">
 	<h3>Enclosures</h3>
-	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-		data-target="#enclosureModal">Create New Enclosure</button>
-	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+	<button type="button" class="btn btn-info btn-lg inline"
+		data-toggle="modal" data-target="#enclosureModal">Create New
+		Enclosure</button>
+	<button type="button" class="btn btn-default inline"
+		ng-click="clearEnclosure()">Clear</button>
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
 		data-target="#enclosureModal" ng-repeat="enclosure in enclosures">{{enclosure.enclosureName}}</button>
+	<ul>
+		<li>{{enclosure.enclosureID}}</li>
+		<li>{{enclosure.enclosureName}}</li>
+		<li>{{enclosure.animal}}</li>
+		<li>{{enclosure.numberOfAnimals}}</li>
+		<li>{{enclosure.feedingTime}}</li>
+		<li>{{enclosure.enclosure_condition}}</li>
+	</ul>
+	<ul>
+		<li ng-repeat="enclosure in enclosures">{{enclosure}}</li>
+	</ul>
 </div>
 <div class="col-md-4">
 	<h3>Animals</h3>
-	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
 		data-target="#animalModal">Create New Animal</button>
-	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
 		data-target="#animalModal" ng-repeat="animal in animals">{{animal.commonName}}</button>
+	<ul>
+		<li>{{animal.animalID}}</li>
+		<li>{{animal.commonName}}</li>
+		<li>{{animal.scientificName}}</li>
+		<li>{{animal.favoriteFood}}</li>
+		<li>{{animal.infoLink}}</li>
+	</ul>
+	<ul>
+		<li ng-repeat="animal in animals">{{animal}}</li>
+	</ul>
 </div>
 <div class="col-md-4">
 	<h3>Foods</h3>
-	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
 		data-target="#foodModal">Create New Food</button>
-	<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
 		data-target="#foodModal" ng-repeat="food in foods">{{food.foodName}}</button>
+	<ul>
+		<li>{{food.foodID}}</li>
+		<li>{{food.foodName}}</li>
+		<li>{{food.vendorName}}</li>
+		<li>{{food.foodType}}</li>
+	</ul>
+	<ul>
+		<li ng-repeat="food in foods">{{food}}</li>
+	</ul>
 </div>
+
+<!-- 'Create' Modal Templates -->
 
 <div id="enclosureModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -28,10 +63,49 @@
 				<h4 class="modal-title">Enclosure Form</h4>
 			</div>
 			<div class="modal-body">
-				<form novalidate>
-					<h1>Is This Working At All?</h1>
-					<formly-form model="enclosure" fields="enclosureFields" form="enclosureForm"> 
-					</formly-form>
+				<form>
+					<div class="form-group required">
+						<!-- Enclosure Name -->
+						<label for="createEnclosureName">Enclosure Name:</label> <input
+							type="text" class="form-control" id="createEnclosureName"
+							placeholder="Enter a name for the enclosure:"
+							ng-model="enclosure.enclosureName">
+					</div>
+					<div class="form-group required">
+						<!-- Animal Select -->
+						<label for="createAnimalSelect">Animal in Enclosure:</label> <select
+							class="form-control" id="createAnimalSelect"
+							ng-options="animal as animal.commonName for animal in animals track by animal.animalID"
+							ng-model="enclosure.animal">
+						</select>
+					</div>
+					<div class="form-group required">
+						<!-- Number in Enclosure -->
+						<label for="createAnimalNumber">Number of Animals:</label> <input
+							type="number" class="form-control" id="createAnimalNumber"
+							placeholder="Enter the number of animals contained:"
+							ng-model="enclosure.numberOfAnimals">
+					</div>
+					<div class="form-group required">
+						<!-- Feeding Time -->
+						<label for="createFeedingTime">Feeding Time:</label> <input
+							type="time" class="form-control" id="createFeedingTime"
+							placeholder="Enter the feeding time:"
+							ng-model="enclosure.feedingTime">
+					</div>
+					<div class="form-group required">
+						<!-- Enclosure Condition Enum -->
+						<label for="createEnclosureCondition">Enclosure Condition:</label>
+						<select class="form-control" id="createEnclosureCondition"
+							ng-model="enclosure.enclosure_condition">
+							<option>GREAT</option>
+							<option>GOOD</option>
+							<option>BAD</option>
+							<option>CRIMINAL</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-default"
+						ng-click="submitEnclosure()">Submit</button>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -50,6 +124,7 @@
 			</div>
 			<div class="modal-body">
 				<p>Soon to Come - Animal Form</p>
+				{{animal}}
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -67,6 +142,7 @@
 			</div>
 			<div class="modal-body">
 				<p>Soon to Come - Food Form</p>
+				{{food}}
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -71,6 +71,7 @@ public class ZookeeprServiceImpl implements ZookeeprService
 	{
 		// TODO Validation before actually saving
 		LOGGER.info("---Creating New Enclosure---");
+		LOGGER.info(enclosure.getEnclosureCondition().toString());
 		return enclosureRepository.save(enclosure);
 	}
 	

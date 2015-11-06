@@ -2,7 +2,10 @@ package com.catalyst.devworks.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,8 @@ public class ZookeeprController
 {
 	ZookeeprService zooService;
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeprController.class);
+	
 	@Autowired
 	public ZookeeprController(ZookeeprServiceImpl zooService)
 	{
@@ -45,17 +50,18 @@ public class ZookeeprController
 		return zooService.getEnclosureByID(id);
 	}
 	
-	@RequestMapping(value="/enclosure/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value="/enclosure", method = RequestMethod.PUT)
 	@ResponseBody
-	public Enclosure updateEnclosureByID(@RequestParam Enclosure enclosure)
+	public Enclosure updateEnclosure(@RequestBody Enclosure enclosure)
 	{
 		return zooService.updateEnclosure(enclosure);
 	}
 	
 	@RequestMapping(value="/enclosure", method = RequestMethod.POST)
 	@ResponseBody
-	public Enclosure createEnclosure(@RequestParam Enclosure enclosure)
+	public Enclosure createEnclosure(@RequestBody Enclosure enclosure)
 	{
+		LOGGER.info(enclosure.getEnclosureCondition().toString());
 		return zooService.createEnclosure(enclosure);
 	}
 	
@@ -82,16 +88,16 @@ public class ZookeeprController
 		return zooService.getAnimalByID(id);
 	}
 	
-	@RequestMapping(value="/animals/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value="/animals", method = RequestMethod.PUT)
 	@ResponseBody
-	public Animal updateAnimalByID(@RequestParam Animal animal)
+	public Animal updateAnimal(@RequestBody Animal animal)
 	{
 		return zooService.updateAnimal(animal);
 	}
 	
 	@RequestMapping(value="/animals", method = RequestMethod.POST)
 	@ResponseBody
-	public Animal createAnimal(@RequestParam Animal animal)
+	public Animal createAnimal(@RequestBody Animal animal)
 	{
 		return zooService.createAnimal(animal);
 	}
@@ -112,16 +118,16 @@ public class ZookeeprController
 		return zooService.getFoodByID(id);
 	}
 	
-	@RequestMapping(value="/food/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value="/food", method = RequestMethod.PUT)
 	@ResponseBody
-	public FavoriteFood updateFoodByID(@RequestParam FavoriteFood food)
+	public FavoriteFood updateFood(@RequestBody FavoriteFood food)
 	{
 		return zooService.updateFood(food);
 	}
 	
 	@RequestMapping(value="/food", method = RequestMethod.POST)
 	@ResponseBody
-	public FavoriteFood createFood(@RequestParam FavoriteFood food)
+	public FavoriteFood createFood(@RequestBody FavoriteFood food)
 	{
 		return zooService.createFood(food);
 	}

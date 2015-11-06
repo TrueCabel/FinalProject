@@ -15,71 +15,45 @@ app.controller(
 
 	$scope.enclosures = [];
 	$scope.enclosure = {};
-	$scope.enclosureFields = [
-	                          {
-	                        	  key: 'enclosureName',
-	                        	  type: 'textarea',
-	                        	  templateOptions: {
-	                        		  label: 'Enclosure Name',
-	                        		  type: 'text',
-	                        		  placeholder: 'Enter an Enclosure Name'
-	                        	  }
-	                          },
-//	                          {
-//	                        	  key: 'animal',
-//	                        	  type: 'select',
-//	                        	  templateOptions: {
-//	                        		  label: 'Animal',
-//	                        		  options: zookeeprservice.getAnimals()
-//	                        	  }
-//	                          },
-	                          {
-	                        	  key: 'numberOfAnimals',
-	                        	  type: 'input',
-	                        	  templateOptions: {
-	                        		  label: 'Number of Animals',
-	                        		  type: 'text',
-	                        		  placeholder: '0'
-	                        	  }
-	                          }
-	];
+	
 	$scope.animals = [];
+	$scope.animal = {};
+	
 	$scope.foods = [];
+	$scope.food = {};
 	
-	getEnclosures();
-	getAnimals();
-	getFoods();
-	
-	function applyEnclosures(newEnclosures){
-		$scope.enclosures = newEnclosures;
-	}
-	function getEnclosures() {
+	resetData();
+
+	function resetData() {
 		zookeeprservice.getEnclosures()
 		.then(
 				function(result) {
-			applyEnclosures(result);
-		});
-	}
-	
-	function applyAnimals(newAnimals){
-		$scope.animals = newAnimals;
-	}
-	function getAnimals() {
+					$scope.enclosures = result;
+				});
+		
 		zookeeprservice.getAnimals()
 		.then(
 				function(result) {
-			applyAnimals(result);
+					$scope.animals = result;
 		});
-	}
-	
-	function applyFoods(newFoods){
-		$scope.foods = newFoods;
-	}
-	function getFoods() {
+		
 		zookeeprservice.getFoods()
 		.then(
 				function(result) {
-			applyFoods(result);
+					$scope.foods = result;
+		});
+	}
+	
+	$scope.clearEnclosure = function() {
+		$scope.enclosure = {};
+	}
+	
+	$scope.submitEnclosure = function() {
+		console.log($scope.enclosure.enclosure_condition);
+		zookeeprservice.submitEnclosure($scope.enclosure)
+		.then(
+				function() {
+					resetData();
 		});
 	}
 });
@@ -89,6 +63,7 @@ app.service(
 	function($http, $q) {
 	var service = {
         getEnclosures: getEnclosures,
+        submitEnclosure: submitEnclosure,
         getAnimals: getAnimals,
         getFoods: getFoods
     };
@@ -96,36 +71,22 @@ app.service(
 	return service;
 	
 	function getEnclosures() {
-        var request = $http({
-            method: "get",
-            url: "api/enclosure/all",
-            params: {
-                action: "get"
-            }
-        });
-        return( request.then(handleSuccess, handleError));
+		return $http.get('api/enclosure/all')
+        .then(handleSuccess, handleError);
     }
+	function submitEnclosure(enclosure) {
+		return $http.post('api/enclosure', enclosure)
+        .then(handleSuccess, handleError)
+	}
 	
 	function getAnimals() {
-        var request = $http({
-            method: "get",
-            url: "api/animals/all",
-            params: {
-                action: "get"
-            }
-        });
-        return(request.then(handleSuccess, handleError));
+		return $http.get('api/animals/all')
+        .then(handleSuccess, handleError);
     }
 	
 	function getFoods() {
-        var request = $http({
-            method: "get",
-            url: "api/food/all",
-            params: {
-                action: "get"
-            }
-        });
-        return( request.then(handleSuccess, handleError));
+		return $http.get('api/food/all')
+        .then(handleSuccess, handleError);
     }
 	
 	function handleError(response) {
