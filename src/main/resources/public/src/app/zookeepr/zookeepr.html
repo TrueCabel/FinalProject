@@ -1,56 +1,29 @@
 <div class="col-md-4">
 	<h3>Enclosures</h3>
-	<button type="button" class="btn btn-info btn-lg inline"
-		data-toggle="modal" data-target="#enclosureModal">Create New
+	<button type="button" class="btn btn-info btn-lg"
+		data-toggle="modal" data-target="#enclosureModal" ng-click="clearEnclosure()">Create New
 		Enclosure</button>
-	<button type="button" class="btn btn-default inline"
-		ng-click="clearEnclosure()">Clear</button>
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-		data-target="#enclosureModal" ng-repeat="enclosure in enclosures">{{enclosure.enclosureName}}</button>
-	<ul>
-		<li>{{enclosure.enclosureID}}</li>
-		<li>{{enclosure.enclosureName}}</li>
-		<li>{{enclosure.animal}}</li>
-		<li>{{enclosure.numberOfAnimals}}</li>
-		<li>{{enclosure.feedingTime}}</li>
-		<li>{{enclosure.enclosure_condition}}</li>
-	</ul>
-	<ul>
-		<li ng-repeat="enclosure in enclosures">{{enclosure}}</li>
-	</ul>
+		data-target="#enclosureModal"
+		ng-repeat="enclosure in enclosures"
+		ng-click="setEnclosure(enclosure)">{{enclosure.enclosureName}}</button>
 </div>
 <div class="col-md-4">
 	<h3>Animals</h3>
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-		data-target="#animalModal">Create New Animal</button>
+		data-target="#animalModal" ng-click="clearAnimal()">Create New Animal</button>
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-		data-target="#animalModal" ng-repeat="animal in animals">{{animal.commonName}}</button>
-	<ul>
-		<li>{{animal.animalID}}</li>
-		<li>{{animal.commonName}}</li>
-		<li>{{animal.scientificName}}</li>
-		<li>{{animal.favoriteFood}}</li>
-		<li>{{animal.infoLink}}</li>
-	</ul>
-	<ul>
-		<li ng-repeat="animal in animals">{{animal}}</li>
-	</ul>
+		data-target="#animalModal"
+		ng-repeat="animal in animals"
+		ng-click="setAnimal(animal)">{{animal.commonName}}</button>
 </div>
 <div class="col-md-4">
 	<h3>Foods</h3>
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-		data-target="#foodModal">Create New Food</button>
+		data-target="#foodModal" ng-click="clearFood()">Create New Food</button>
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-		data-target="#foodModal" ng-repeat="food in foods">{{food.foodName}}</button>
-	<ul>
-		<li>{{food.foodID}}</li>
-		<li>{{food.foodName}}</li>
-		<li>{{food.vendorName}}</li>
-		<li>{{food.foodType}}</li>
-	</ul>
-	<ul>
-		<li ng-repeat="food in foods">{{food}}</li>
-	</ul>
+		data-target="#foodModal" ng-repeat="food in foods"
+		ng-click="setFood(food)">{{food.foodName}}</button>
 </div>
 
 <!-- 'Create' Modal Templates -->
@@ -97,15 +70,14 @@
 						<!-- Enclosure Condition Enum -->
 						<label for="createEnclosureCondition">Enclosure Condition:</label>
 						<select class="form-control" id="createEnclosureCondition"
-							ng-model="enclosure.enclosure_condition">
-							<option>GREAT</option>
-							<option>GOOD</option>
-							<option>BAD</option>
-							<option>CRIMINAL</option>
+							ng-model="enclosure.enclosureCondition"
+							ng-options="key as val for (key, val) in conditionOptions">
 						</select>
 					</div>
 					<button type="submit" class="btn btn-default"
 						ng-click="submitEnclosure()">Submit</button>
+					<button type="button" class="btn btn-default" ng-show="enclosure.enclosureID"
+						ng-click="deleteEnclosure(enclosure.enclosureID)">Delete</button>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -123,8 +95,39 @@
 				<h4 class="modal-title">Animal Form</h4>
 			</div>
 			<div class="modal-body">
-				<p>Soon to Come - Animal Form</p>
-				{{animal}}
+				<form>
+					<div class="form-group required">
+						<!-- Common Name -->
+						<label for="createCommonName">Common Name:</label> <input
+							type="text" class="form-control" id="createCommonName"
+							placeholder="Enter the common name of the animal:"
+							ng-model="animal.commonName">
+					</div>
+					<div class="form-group required">
+						<!-- Scientific Name -->
+						<label for="createScientificName">Scientific name:</label> <input
+							type="text" class="form-control" id="createScientificName"
+							placeholder="Enter a name for the enclosure:"
+							ng-model="animal.scientificName">
+					</div>
+					<div class="form-group required">
+						<!-- Favorite Food -->
+						<label for="createFavoriteFood">Favorite Food:</label> <select
+							class="form-control" id="createFavoriteFood"
+							ng-options="food as food.foodName for food in foods track by food.foodID"
+							ng-model="animal.favoriteFood">
+						</select>
+					</div>
+					<div class="form-group required">
+						<!-- Info Link -->
+						<label for="createInfoLink">Info Link:</label> <input type="text"
+							class="form-control" id="createInfoLink"
+							placeholder="Enter a name for the enclosure:"
+							ng-model="animal.infoLink">
+					</div>
+					<button type="submit" class="btn btn-default"
+						ng-click="submitAnimal()">Submit</button>
+				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -141,8 +144,30 @@
 				<h4 class="modal-title">Food Form</h4>
 			</div>
 			<div class="modal-body">
-				<p>Soon to Come - Food Form</p>
-				{{food}}
+				<form>
+					<div class="form-group required">
+						<!-- Food Name -->
+						<label for="createFoodName">Food Name:</label> <input type="text"
+							class="form-control" id="createFoodName"
+							placeholder="Enter the name of the food:"
+							ng-model="food.foodName">
+					</div>
+					<div class="form-group required">
+						<!-- Scientific Name -->
+						<label for="createVendorName">Vendor Name:</label> <input
+							type="text" class="form-control" id="createVendorName"
+							placeholder="Enter the vendor name:" ng-model="food.vendorName">
+					</div>
+					<div class="form-group required">
+						<!-- Food Type Enum -->
+						<label for="createFoodType">Food Type:</label> <select
+							class="form-control" id="createFoodType" ng-model="food.foodType"
+							ng-options="key as val for (key, val) in typeOptions">
+						</select>
+					</div>
+					<button type="submit" class="btn btn-default"
+						ng-click="submitFood()">Submit</button>
+				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

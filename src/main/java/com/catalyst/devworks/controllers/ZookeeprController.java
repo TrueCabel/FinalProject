@@ -61,7 +61,6 @@ public class ZookeeprController
 	@ResponseBody
 	public Enclosure createEnclosure(@RequestBody Enclosure enclosure)
 	{
-		LOGGER.info(enclosure.getEnclosureCondition().toString());
 		return zooService.createEnclosure(enclosure);
 	}
 	

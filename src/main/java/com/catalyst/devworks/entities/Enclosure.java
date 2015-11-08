@@ -1,10 +1,7 @@
 package com.catalyst.devworks.entities;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,14 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="animal_enclosure", catalog="zookeepr")
@@ -51,7 +43,7 @@ public class Enclosure implements java.io.Serializable
 		
 	@NotNull
 	@Column(name = "enclosure_condition")
-	private EnclosureConditionEnum enclosure_condition;
+	private EnclosureConditionEnum enclosureCondition;
 	
 	public Long getEnclosureID()
 	{
@@ -95,10 +87,10 @@ public class Enclosure implements java.io.Serializable
 	}
 	public EnclosureConditionEnum getEnclosureCondition()
 	{
-		return this.enclosure_condition;
+		return this.enclosureCondition;
 	}
-	public void setEnclosureCondition(EnclosureConditionEnum enclosure_condition)
+	public void setEnclosureCondition(EnclosureConditionEnum enclosureCondition)
 	{
-		this.enclosure_condition = enclosure_condition;
+		this.enclosureCondition = enclosureCondition;
 	}
 }
