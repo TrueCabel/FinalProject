@@ -80,7 +80,6 @@ app
 		});
 	}
 	$scope.deleteEnclosure = function(id) {
-		console.log("In Controller: " + $scope.enclosure.enclosureID);
 		zookeeprservice.deleteEnclosure($scope.enclosure.enclosureID).then(function() {
 			resetData();
 		});
@@ -131,9 +130,10 @@ app.service("zookeeprservice", function($http, $q) {
 		return $http.post('api/enclosure', enclosure).then(handleSuccess,
 				handleError)
 	}
-	function deleteEnclosure(id) {
-		console.log("In Service: " + id);
-		return $http.delete('api/enclosure', id).then(handleSuccess,
+	function deleteEnclosure(enid) {
+		return $http.delete('api/enclosure', {
+			params: {id: enid}
+		}).then(handleSuccess,
 				handleError)
 	}
 
